@@ -11,57 +11,65 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //CarTest();    
+            //BrandTest();
+            //ColorTest();
+
+        }
+
+        private static void ColorTest()
+        {
+            Color color = new Color
+            {
+                Id = 1002,
+                Name = "Sarı"
+            };
+
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+
+            colorManager.Delete(color);
+            foreach (var colorr in colorManager.GetAll())
+            {
+                Console.WriteLine("Id : {0} Marka: {1}", colorr.Id, colorr.Name);
+            }
+        }
+
+        private static void BrandTest()
+        {
+            Brand brand = new Brand
+            {
+                Id = 1002,
+                Name = "Fiat Egea"
+            };
+
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+
+            brandManager.Update(brand);
+            foreach (var brandd in brandManager.GetAll())
+            {
+                Console.WriteLine("Id : {0} Marka: {1}", brandd.Id, brandd.Name);
+            }
+        }
+
+        private static void CarTest()
+        {
             Car ford = new Car
             {
-                Id = 4,
+                Id = 1002,
                 BrandId = 4,
                 ColorId = 3,
-                Description = "Y",
+                Description = "Silicem",
                 DailyPrice = 2120,
                 ModelYear = "2017"
             };
-
             CarManager carManager = new CarManager(new EfCarDal());
-            
-            Console.WriteLine("**************** Renk Id'ye Göre Araç *****************");
-            foreach (var car in carManager.GetCarsByColorId(2))
+
+            carManager.Delete(ford);
+
+            foreach (var car in carManager.GetCarDetails())
             {
-                Console.WriteLine("Arabanın Açıklaması: {0} Arabanın Yılı: {1} Günlük Ücret: {2}", car.Description, car.ModelYear, car.DailyPrice);
+                Console.WriteLine("Araç Açıklaması : {0} Marka: {1} Renk: {2} Günlük Fiyatı: {3}", car.Description, car.BrandName, car.ColorName, car.DailyPrice);
             }
-
-            Console.WriteLine("\n**************** Marka Id'ye Göre Araç *****************");
-            foreach (var car in carManager.GetCarsByBrandId(1))
-            {
-                Console.WriteLine(car.Description);
-            }
-
-
-            //Console.WriteLine("\n****************Araç Eklendi***********************");
-            //carManager.Add(ford); //araç eklemek için id alanı silinmeli
-            //foreach (var car in carManager.GetAll())
-            //{
-            //    Console.WriteLine("Arabanın Açıklaması: {0} Arabanın Yılı: {1} Günlük Ücret: {2}", car.Description, car.ModelYear, car.DailyPrice);
-            //}
-
-            //carManager.Update(ford);
-            //Console.WriteLine("\n****************Araç Güncellendi***********************");
-            //foreach (var car in carManager.GetAll())
-            //{
-            //    Console.WriteLine("Arabanın Açıklaması: {0} Arabanın Yılı: {1} Günlük Ücret: {2}", car.Description, car.ModelYear, car.DailyPrice);
-            //}
-
-            //carManager.Delete(ford);
-            //Console.WriteLine("\n*****************Araç Silindi**********************");
-
-            //foreach (var car in carManager.GetAll())
-            //{
-            //    Console.WriteLine(car.Description);
-            //}
-
-
-
-
-
         }
     }
 }
