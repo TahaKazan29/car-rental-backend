@@ -25,9 +25,8 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.CarInvalid);
             }
-            return new SuccessResult(Messages.CarAdded);
             _carDal.Add(car);
-            //Console.WriteLine("Araba adı 2 karekter ve günlük fiyat 0 dan büyük olmalı !");
+            return new SuccessResult(Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
