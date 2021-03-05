@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Business.BusinessAspects.Autofac;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.Utilities.Business;
 
 namespace Business.Concrete
@@ -24,6 +26,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         [SecuredOperation("car.add")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
@@ -46,6 +49,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [CacheAspect()]
         public IDataResult<List<Car>> GetAll()
         {
            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarsListed);
@@ -70,5 +74,18 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
+
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Car car)
+        {
+            Add(car);
+            if (car.DailyPrice < 10)
+            {
+                throw new Exception("");
+            }
+            Add(car);
+            return null;
+        }
+
     }
 }
