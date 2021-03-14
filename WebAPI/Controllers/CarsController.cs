@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getcarsbybrandid/{id}")]
+        [Route("getcarsbybrand/{id}")]
         public IActionResult GetCarsByBrandId(int id)
         {
             var result = _carService.GetCarsByBrandId(id);
@@ -60,8 +60,9 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+
         [HttpGet]
-        [Route("getcarsbycolorid/{id}")]
+        [Route("getcarsbycolor/{id}")]
         public IActionResult GetCarsByColorId(int id)
         {
             var result = _carService.GetCarsByColorId(id);
@@ -84,6 +85,7 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
 
         [HttpPost("add")]
         public IActionResult Add(Car car)
