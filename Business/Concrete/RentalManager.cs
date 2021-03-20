@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -21,15 +22,15 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(RentalValidator))]
-        public IResult Add(Rental rental)
+        public IDataResult<Rental> Add(Rental rental)
         {
-            var result = ReturnDateCheck(rental.CarId);
-            if (!result.Success)
+            var result = BusinessRule.Run(ReturnDateCheck(rental.CarId,rental.RentDate));
+            if (result != null)
             {
-                return new ErrorResult();
+                return new ErrorDataResult<Rental>(result.Message);
             }
             _rentalDal.Add(rental);
-            return new SuccessResult();
+            return new SuccessDataResult<Rental>(rental);
         }
 
         public IResult Delete(Rental rental)
@@ -53,16 +54,36 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }
 
-        public IResult ReturnDateCheck(int carId)
-        {
-            _rentalDal.GetRentalDetails(r => r.CarId == carId && r.ReturnDate == null);
-            return new SuccessResult();
-        }
 
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
             return new SuccessResult();
         }
+
+        // Business Rules
+
+        private IResult ReturnDateCheck(int carId,DateTime rentDate)
+        {
+            //var result = _rentalDal.GetRentalDetails(r => r.CarId == carId && r.ReturnDate <= DateTime.Now).Count;
+            //if (result > 0)
+            //{
+            //    return new SuccessResult();
+            //}
+            //return new ErrorResult();
+
+            var rentals = _rentalDal.GetRentalDetails(p => p.CarId == carId);
+
+            foreach (var item in rentals)
+            {
+                if (rentDate < item.ReturnDate)
+                {
+                    return new ErrorResult();
+                }
+            }
+
+            return new SuccessResult();
+        }
+
     }
 }

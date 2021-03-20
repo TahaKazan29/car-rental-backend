@@ -28,6 +28,7 @@ namespace DataAccess.Concrete.EntityFramework
                         Id = re.Id,
                         CarName = ca.Description,
                         CustomerName = cus.CompanyName,
+                        CustomerId = cus.Id,
                         CarId = ca.Id,
                         RentDate = re.RentDate,
                         ReturnDate = re.ReturnDate,

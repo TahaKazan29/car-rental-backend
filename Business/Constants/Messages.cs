@@ -22,5 +22,6 @@ namespace Business.Constants
         public static string UserRegistered = "Kayıt Olundu";
         public static string AccessTokenCreated = "Token Oluşturuldu";
         public static string AuthozationDenied = "Yetkiniz yok";
+        public static string BankSuccess = "Banka bilgileri başarıyla eklendi";
     }
 }

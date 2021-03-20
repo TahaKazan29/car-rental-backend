@@ -37,7 +37,45 @@ namespace DataAccess.Concrete.EntityFramework
             }
        }
 
-       public CarForDetailDto GetForCarDetails(Expression<Func<Car, bool>> filter = null)
+        public List<CarDetailDto> GetCarsByFilter(int? brandId, int? colorId)
+        {
+            using (CarRentalContext context = new CarRentalContext())
+            {
+                IQueryable<Car> query = context.Cars;
+
+                if (brandId != null)
+                {
+                    query = query.Where(c => c.BrandId == brandId);
+                }
+
+                if (colorId != null)
+                {
+                    query = query.Where(c => c.ColorId == colorId);
+                }
+
+                var result = from c in brandId != null ? query = query.Where(c => c.BrandId == brandId) : colorId != null ? query = query.Where(c => c.ColorId == colorId) :
+                             context.Cars
+                             join b in context.Brands
+                             on c.BrandId equals b.Id
+                             join cc in context.Colors
+                             on c.ColorId equals cc.Id
+                             select new CarDetailDto
+                             {
+                                 Id = c.Id,
+                                 BrandName = b.Name,
+                                 ColorName = cc.Name,
+                                 DailyPrice = c.DailyPrice,
+                                 ModelYear = c.ModelYear,
+                                 Description = c.Description,
+                                 ImagePath = c.CarImages.FirstOrDefault(p => p.IsMain).ImagePath
+                             };
+
+                return result.ToList();
+              
+            }
+        }
+
+        public CarForDetailDto GetForCarDetails(Expression<Func<Car, bool>> filter = null)
        {
            using (CarRentalContext context = new CarRentalContext())
            {
