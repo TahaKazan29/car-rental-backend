@@ -29,8 +29,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  ColorName = cc.Name,
                                  DailyPrice = c.DailyPrice,
                                  ModelYear = c.ModelYear,
-                                 Description = c.Description,
-                                 ImagePath = c.CarImages.FirstOrDefault(p => p.IsMain).ImagePath
+                                 Description = c.Description, 
+                                 ImagePath = c.CarImages.Count == 0 ? @"/Images/default.jpg" : c.CarImages.FirstOrDefault(p => p.IsMain).ImagePath
                              };
 
                 return result.ToList();
@@ -79,13 +79,14 @@ namespace DataAccess.Concrete.EntityFramework
        {
            using (CarRentalContext context = new CarRentalContext())
            {
+               var newCar = new List<CarImage>();
+               newCar.Add(new CarImage{ ImagePath = @"/Images/default.jpg" });
                var result = from c in filter == null ? context.Cars : context.Cars.Where(filter)
                    join b in context.Brands
                        on c.BrandId equals b.Id
                    join cc in context.Colors
                        on c.ColorId equals cc.Id
-                   join i in context.CarImages
-                       on c.Id equals i.CarId
+                   
                    select new CarForDetailDto()
                    {
                        Id = c.Id,
@@ -94,7 +95,7 @@ namespace DataAccess.Concrete.EntityFramework
                        DailyPrice = c.DailyPrice,
                        ModelYear = c.ModelYear,
                        Description = c.Description,
-                       CarImages = c.CarImages
+                       CarImages = c.CarImages.Count == 0 ? newCar : c.CarImages
                    };
                return result.FirstOrDefault();
            }

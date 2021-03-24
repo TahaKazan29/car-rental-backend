@@ -55,11 +55,11 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
 
-            return BadRequest(result);
+            return BadRequest(result);  
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile formFile, [FromForm] CarImage carImage)
+        public IActionResult Add([FromForm(Name = ("ImagePath"))] IFormFile formFile,[FromForm] CarImage carImage)
         {
             var result = _carImageService.Add(formFile,carImage);
             if (result.Success)

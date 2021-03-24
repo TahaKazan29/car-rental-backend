@@ -27,22 +27,22 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("ICarService.Get")]
-        [SecuredOperation("car.add")]
+        //[SecuredOperation("car.add")]
         [ValidationAspect(typeof(CarValidator))]
-        public IResult Add(Car car)
+        public IDataResult<Car> Add(Car car)
         {
-            BusinessRule.Run();
+            var result = BusinessRule.Run();
             _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);
+            return new SuccessDataResult<Car>(car,Messages.CarAdded);
         }
 
         public IResult Delete(Car car)
         {
-            //bussines success or error
             _carDal.Delete(car);
             return new SuccessResult();
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
@@ -106,6 +106,11 @@ namespace Business.Concrete
             Add(car);
             return null;
         }
+
+        //private IResult CheckNullImage()
+        //{
+
+        //}
 
     }
 }

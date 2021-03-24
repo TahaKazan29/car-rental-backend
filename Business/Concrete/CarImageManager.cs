@@ -34,7 +34,7 @@ namespace Business.Concrete
 
             if (result != null)
             {
-                return new ErrorDataResult<List<CarImage>>(result.Message);
+                return new ErrorDataResult<List<CarImage>>(result.Message); 
             }
 
             return new SuccessDataResult<List<CarImage>>(CheckIfCarImageNull(id).Data);
@@ -48,15 +48,23 @@ namespace Business.Concrete
 
         public IResult Add(IFormFile formFile,CarImage carImage)
         {
-            IResult result = BusinessRule.Run(CheckIfImageLimit(carImage.CarId));
-            if (result!=null)
+            IResult result = BusinessRule.Run(CheckIfImageLimit(carImage.CarId)); 
+            if (result != null)
             {
                 return result;
             }
             carImage.ImagePath = FileHelper.AddAsync(formFile);
+            carImage.IsMain = true;
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
             return new SuccessResult(Messages.CarImageAdded);
+
+        }
+
+        public IResult AddDefault(CarImage carImage)
+        {
+           _carImageDal.Add(carImage);
+           return new SuccessResult();
         }
 
         public IResult Update(IFormFile formFile,CarImage carImage)
@@ -93,7 +101,7 @@ namespace Business.Concrete
                 if (!result)
                 {
                     List<CarImage> carImage = new List<CarImage>();
-                    carImage.Add(new CarImage { CarId = id, ImagePath = path, Date = DateTime.Now });
+                    carImage.Add(new CarImage { CarId = id, ImagePath = path, IsMain = true,Date = DateTime.Now });
                     return new SuccessDataResult<List<CarImage>>(carImage);
                 }
             }
