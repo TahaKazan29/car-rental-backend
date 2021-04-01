@@ -2,22 +2,22 @@
 
 ## Backend With C# 
 
-### Katmanlar 
+### Layers 
 
-#### Kurumsal, Katmanlı Mimari yapısı kullanılarak SOLID kuralları dahilinde oluşturulmuş, C# dili ile yazılmış Araba kiralama fikri üzerinden ilerlenmştir.
+#### It is a Car Rental Backend project written in .Net, developed within the framework of Enterprise Layered Architecture and SOLID principles.
 
-* **Core:** Projenin çekirdek katmanı, evrensel operasyonlar için kullanılmaktadır.
-* **DataAccess:** Projenin, Veritabanı ile bağını kuran katmandır.
-* **Entities:** Veritabanındaki tablolarımızın projemizde nesne olarak kullanılması için oluşturulmuştur. DTO nesnelerinide barındırmaktadır.
-* **Business:** Projemizin iş katmanıdır. Türlü iş kuralları; Veri kontrolleri, validasyonlar, IoC Container'lar ve yetki kontrolleri
-* **WebAPI:** Prjenin Restful API Katmanıdır. Kullanılan methodlar: Get, Post, Put, Delete
+* **Core:** The core layer of the project is used for universal operations.
+* **DataAccess:** It is the layer that connects the project to the Database.
+* **Entities:** It was created to use our tables in the database as objects in our project. It also includes DTO objects.
+* **Business:** It is the business layer of our project. Various business rules; Data controls, validations, IoC Containers and authorization checks
+* **WebAPI:** It is the Restful API Layer of the project. Methods used: Receive, Send, Put, Delete
 
-### Kullanılan Teknolojiler
+### Used Technologies
 
 
 * .Net Core 3.1
 * Restful API
-* Result Türleri
+* Result Types
 * Interceptor
 * Autofac
   * IoC Containers
@@ -27,7 +27,7 @@
     * Transaction
     * Validation
 * Fluent Validation
-* Cache yönetimi
+* Cache Management
 * JWT Authentication
 * Repository Design Pattern
 * Cross Cutting Concerns
