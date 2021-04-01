@@ -8,6 +8,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using System.IO;
 using System.Linq;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Business;
 using Core.Utilities.FileHelper;
 using Microsoft.AspNetCore.Http;
@@ -46,6 +47,7 @@ namespace Business.Concrete
 
         }
 
+        [SecuredOperation("admin")]
         public IResult Add(IFormFile formFile,CarImage carImage)
         {
             IResult result = BusinessRule.Run(CheckIfImageLimit(carImage.CarId)); 

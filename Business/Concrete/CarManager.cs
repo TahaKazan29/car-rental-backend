@@ -27,11 +27,13 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("ICarService.Get")]
-        //[SecuredOperation("car.add")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IDataResult<Car> Add(Car car)
         {
             var result = BusinessRule.Run();
+            Random value = new Random();
+            car.FindeksValue = value.Next(0, 1901);
             _carDal.Add(car);
             return new SuccessDataResult<Car>(car,Messages.CarAdded);
         }
@@ -106,11 +108,6 @@ namespace Business.Concrete
             Add(car);
             return null;
         }
-
-        //private IResult CheckNullImage()
-        //{
-
-        //}
 
     }
 }

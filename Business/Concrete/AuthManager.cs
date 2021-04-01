@@ -67,11 +67,33 @@ namespace Business.Concrete
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            var claimss = _userService.GetClaims(user).Data;
+            var claimss = _userService.GetClaims(user.Id).Data;
             var list = new List<OperationClaim>();
             claimss.ToList().ForEach(role => list.Add(new OperationClaim {Id = role.Id, Name = role.Name}));
             var accessToken = _tokenHelper.CreateToken(user, list);
             return new SuccessDataResult<AccessToken>(accessToken,Messages.AccessTokenCreated);
+        }
+
+        public IResult ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            byte[] passwordHash, passwordSalt;
+            var userToCheck = _userService.GetById(changePasswordDto.UserId).Data;
+
+            if (userToCheck == null)
+            {
+                return new ErrorDataResult<User>(Messages.UserNotFound);
+            }
+
+            if (!HashingHelper.VerifyPasswordHash(changePasswordDto.oldPassword, userToCheck.PasswordHash, userToCheck.PasswordSalt))
+            {
+                return new ErrorDataResult<User>(Messages.PasswordError);
+            }
+
+            HashingHelper.CreatePasswordHash(changePasswordDto.newPassword, out passwordHash, out passwordSalt);
+            userToCheck.PasswordSalt = passwordSalt;
+            userToCheck.PasswordHash = passwordHash;
+            _userService.Update(userToCheck);
+            return new SuccessResult(Messages.PasswordChanged);
         }
     }
 }

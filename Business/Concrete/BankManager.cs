@@ -20,7 +20,7 @@ namespace Business.Concrete
             _bankDal = bankDal;
         }
 
-        public IResult Add(BankDto bankDto)
+        public IDataResult<Bank> Add(BankDto bankDto)
         {
             Bank bankAdded = new Bank()
             {
@@ -32,7 +32,7 @@ namespace Business.Concrete
             };
 
             _bankDal.Add(bankAdded);
-            return new SuccessResult(Messages.BankSuccess);
+            return new SuccessDataResult<Bank>(bankAdded,Messages.BankSuccess);
 
         }
 

@@ -5,7 +5,9 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Castle.Core.Internal;
 using Core.Entities.Concrete;
+using Core.Utilities.Security.Hashing;
 using Entities.DTOs;
 
 namespace Business.Concrete
@@ -20,6 +22,12 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
+        public IDataResult<UserForDetail> GetForUserDetailById(int id)
+        {
+            return new SuccessDataResult<UserForDetail>(_userDal.GetForUserDetailById(u => u.Id == id));
+        }
+
+
         public IResult Add(User user)
         {
             _userDal.Add(user);
@@ -32,9 +40,9 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public IDataResult<List<OperationClaimDto>> GetClaims(User user)
+        public IDataResult<List<OperationClaimDto>> GetClaims(int id)
         {
-            return new SuccessDataResult<List<OperationClaimDto>>(_userDal.GetClaims(user));
+            return new SuccessDataResult<List<OperationClaimDto>>(_userDal.GetClaims(id));
         }
 
         public IDataResult<User> GetByMail(string email)
@@ -57,5 +65,17 @@ namespace Business.Concrete
             _userDal.Update(user);
             return new SuccessResult();
         }
+
+        public IResult UpdateUserInfo(User user)
+        {
+            var userToUpdate = GetById(user.Id).Data;
+            userToUpdate.FirstName = user.FirstName;
+            userToUpdate.LastName = user.LastName;
+            userToUpdate.Email = user.Email;
+            Update(userToUpdate);
+            return new SuccessResult();
+        }
+
+
     }
 }

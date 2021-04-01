@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using Core.Entities.Concrete;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -37,6 +38,30 @@ namespace WebAPI.Controllers
         public IActionResult GetById(int id)
         {
             var result = _userService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpGet("getclaims/{id}")]
+        public IActionResult GetClaims(int id)
+        {
+            var result = _userService.GetClaims(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpGet("getforuserdetail/{id}")]
+        public IActionResult GetForUserDetailById(int id)
+        {
+            var result = _userService.GetForUserDetailById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -78,6 +103,17 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
 
+            return BadRequest(result);
+        }
+
+        [HttpPut("updateuserinfo")]
+        public IActionResult UpdateInfos(User user)
+        {
+            var result = _userService.UpdateUserInfo(user);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
             return BadRequest(result);
         }
     }

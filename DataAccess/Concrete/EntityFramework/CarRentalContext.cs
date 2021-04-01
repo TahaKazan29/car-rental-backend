@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Core.Entities.Concrete;
+using FluentValidation.Internal;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -24,5 +25,8 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<CreditNote> CreditNotes { get; set; }
+        public DbSet<RegisteredCreditCard> RegisteredCreditCards { get; set; }
+
     }
 }

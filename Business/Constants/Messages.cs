@@ -20,8 +20,10 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Giriş Başarılı";
         public static string UserAlreadyExists = "Kullanıcı zaten mevcut";
         public static string UserRegistered = "Kayıt Olundu";
-        public static string AccessTokenCreated = "Token Oluşturuldu";
+        public static string AccessTokenCreated = "Giriş Başarılı";
         public static string AuthozationDenied = "Yetkiniz yok";
         public static string BankSuccess = "Banka bilgileri başarıyla eklendi";
+        public static string Completed = "Findeks Notu Gösterildi";
+        public static string PasswordChanged = "Şifre Değiştirildi";
     }
 }

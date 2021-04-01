@@ -9,7 +9,7 @@ namespace Business.Abstract
 {
     public interface IBankService
     {
-        IResult Add(BankDto bankDto);
+        IDataResult<Bank> Add(BankDto bankDto);
         IDataResult<List<Bank>> GetAll();
     }
 }

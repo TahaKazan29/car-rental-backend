@@ -78,7 +78,7 @@ namespace Business.Concrete
             {
                 if (rentDate < item.ReturnDate)
                 {
-                    return new ErrorResult();
+                    return new ErrorResult("Araç Kiraya Verilmiş");
                 }
             }
 

@@ -11,19 +11,19 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CreditNotesController : ControllerBase
     {
-        ICustomerService _customerService;
+        private ICreditNoteService _creditNoteService;
 
-        public CustomersController(ICustomerService customerService)
+        public CreditNotesController(ICreditNoteService creditNoteService)
         {
-            _customerService = customerService;
+            _creditNoteService = creditNoteService;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var result = _customerService.GetAll();
+            var result = _creditNoteService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var result = _customerService.GetById(id);
+            var result = _creditNoteService.GetById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -44,10 +44,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbyuserid/{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetByUserId(int id)
         {
-            var result = _customerService.GetByUserId(id);
+            var result = _creditNoteService.GetUserById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -57,33 +57,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Customer customer)
+        public IActionResult Add(CreditNote creditNote)
         {
-            var result = _customerService.Add(customer);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
-        }
-
-        [HttpDelete("delete")]
-        public IActionResult Delete(Customer customer)
-        {
-            var result = _customerService.Delete(customer);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
-        }
-
-        [HttpPut("update")]
-        public IActionResult Update(Customer customer)
-        {
-            var result = _customerService.Update(customer);
+            var result = _creditNoteService.Add(creditNote);
             if (result.Success)
             {
                 return Ok(result);

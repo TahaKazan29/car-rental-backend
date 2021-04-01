@@ -95,7 +95,8 @@ namespace DataAccess.Concrete.EntityFramework
                        DailyPrice = c.DailyPrice,
                        ModelYear = c.ModelYear,
                        Description = c.Description,
-                       CarImages = c.CarImages.Count == 0 ? newCar : c.CarImages
+                       CarImages = c.CarImages.Count == 0 ? newCar : c.CarImages,
+                       FindeksValue = c.FindeksValue
                    };
                return result.FirstOrDefault();
            }
