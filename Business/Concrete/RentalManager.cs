@@ -65,13 +65,6 @@ namespace Business.Concrete
 
         private IResult ReturnDateCheck(int carId,DateTime rentDate)
         {
-            //var result = _rentalDal.GetRentalDetails(r => r.CarId == carId && r.ReturnDate <= DateTime.Now).Count;
-            //if (result > 0)
-            //{
-            //    return new SuccessResult();
-            //}
-            //return new ErrorResult();
-
             var rentals = _rentalDal.GetRentalDetails(p => p.CarId == carId);
 
             foreach (var item in rentals)

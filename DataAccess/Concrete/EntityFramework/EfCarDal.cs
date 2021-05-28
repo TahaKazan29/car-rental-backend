@@ -53,7 +53,7 @@ namespace DataAccess.Concrete.EntityFramework
                     query = query.Where(c => c.ColorId == colorId);
                 }
 
-                var result = from c in brandId != null ? query = query.Where(c => c.BrandId == brandId) : colorId != null ? query = query.Where(c => c.ColorId == colorId) :
+                var result = from c in brandId != null ?  query.Where(c => c.BrandId == brandId) : colorId != null ?  query.Where(c => c.ColorId == colorId) :
                              context.Cars
                              join b in context.Brands
                              on c.BrandId equals b.Id

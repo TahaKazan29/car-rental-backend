@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfRegisteredCreditCard:EfEntityRepositoryBase<RegisteredCreditCard,CarRentalContext>,IRegisteredCreditCardDal
+    public class EfRegisteredCreditCardDal:EfEntityRepositoryBase<RegisteredCreditCard,CarRentalContext>,IRegisteredCreditCardDal
     {
         //public List<RegisteredCreditCardDto> RegisteredCreditCart(Expression<Func<RegisteredCreditCard, bool>> filter = null)
         //{

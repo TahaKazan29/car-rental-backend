@@ -43,13 +43,19 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfBankDal>().As<IBankDal>().SingleInstance();
 
             builder.RegisterType<CreditNoteManager>().As<ICreditNoteService>().SingleInstance();
-            builder.RegisterType<EfCreditNote>().As<ICreditNoteDal>().SingleInstance();
+            builder.RegisterType<EfCreditNoteDal>().As<ICreditNoteDal>().SingleInstance();
 
             builder.RegisterType<RegisteredCreditCardManager>().As<IRegisteredCreditCardService>().SingleInstance();
-            builder.RegisterType<EfRegisteredCreditCard>().As<IRegisteredCreditCardDal>().SingleInstance();
+            builder.RegisterType<EfRegisteredCreditCardDal>().As<IRegisteredCreditCardDal>().SingleInstance();
 
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
+
+            builder.RegisterType<OpertaionClaimManager>().As<IOperationClaimService>().SingleInstance();
+            builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>().SingleInstance();
+
+            builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>().SingleInstance();
+            builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>().SingleInstance();
 
 
 

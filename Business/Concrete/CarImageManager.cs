@@ -47,7 +47,6 @@ namespace Business.Concrete
 
         }
 
-        [SecuredOperation("admin")]
         public IResult Add(IFormFile formFile,CarImage carImage)
         {
             IResult result = BusinessRule.Run(CheckIfImageLimit(carImage.CarId)); 
@@ -69,6 +68,7 @@ namespace Business.Concrete
            return new SuccessResult();
         }
 
+        [SecuredOperation("admin,car.add")]
         public IResult Update(IFormFile formFile,CarImage carImage)
         {
             var oldPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(p => p.Id == carImage.Id).ImagePath;
